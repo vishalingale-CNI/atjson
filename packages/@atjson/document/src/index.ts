@@ -127,9 +127,19 @@ export default class Document {
 
     let insertion = new Insertion(start, text, behaviour);
     try {
+      let changes: Annotation[] = [];
       for (let i = this.annotations.length - 1; i >= 0; i--) {
         let annotation = this.annotations[i];
-        annotation.handleChange(insertion);
+        changes.concat(...(annotation.handleChange(insertion) || []));
+      }
+      for (let i = 0, len = changes.length; i <= len; i++) {
+        let change = changes[i];
+        let existing = this.annotations.find(a => a.id === change.id);
+        if (existing && change !== existing) {
+          this.replaceAnnotation(existing, change);
+        } else {
+          this.addAnnotations(change);
+        }
       }
 
       this.content = this.content.slice(0, start) + text + this.content.slice(start);
@@ -138,31 +148,6 @@ export default class Document {
       console.error('Failed to insert text', e);
     }
 
-    /*
-        if (text.indexOf('\n') > -1) {
-      let prevEnd: number;
-      for (let j = this.annotations.length - 1; j >= 0; j--) {
-        a = this.annotations[j];
-
-        // This doesn't affect us.
-        if (a.type !== 'block') continue;
-        if (a.end < position) continue;
-        if (position < a.start) continue;
-
-        // First adjust the end of the current paragraph.
-        prevEnd = a.end;
-        a.end = position + 1;
-
-        // And now add a new paragraph.
-        this.addAnnotations({
-          type: 'paragraph',
-          display: 'block',
-          start: position + 1,
-          end: prevEnd
-        });
-      }
-    }
-    */
     this.triggerChange();
   }
 
