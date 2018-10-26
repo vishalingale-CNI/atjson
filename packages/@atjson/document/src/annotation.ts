@@ -46,6 +46,34 @@ export default abstract class Annotation {
     this.attributes = attrs.attributes;
   }
 
+  /**
+   * Merges two annotations together into a single annotation. This is
+   * especially useful when text formatting is applied that should be
+   * merged with contiguous formatting of the same type. (cf. Bold)
+   *
+   * @param annotation The annotation to merge the current annotation with.
+   * @param strict Whether the merge should throw an error if any validation fails
+   */
+  merge(annotation: Annotation, strict?: boolean) {
+    let Constructor = this.constructor as AnnotationConstructor;
+    let OtherConstructor = annotation.constructor as AnnotationConstructor;
+    if (Constructor === OtherConstructor) {
+      if (this.isOverlapping(annotation)) {
+        this.start = Math.min(this.start, annotation.start);
+        this.end = Math.max(this.end, annotation.end);
+        return true;
+      } else if (strict) {
+        throw new Error(`🙅‍♀️ These annotations can't be merged!\n\`-${Constructor.vendorPrefix}-${Constructor.type}[${this.id}]\` does not overlap with \`-${Constructor.vendorPrefix}-${Constructor.type}[${annotation.id}]\``);
+      } else {
+        return false;
+      }
+    } else if (strict) {
+      throw new Error(`🙅‍♀️ These annotations can't be merged!\n\`-${Constructor.vendorPrefix}-${Constructor.type}[${this.id}]\` is not of the same type as \`-${OtherConstructor.vendorPrefix}-${OtherConstructor.type}[${annotation.id}]\``);
+    } else {
+      return false;
+    }
+  }
+
   isInside(annotation: Annotation): boolean;
   isInside(start: number, end: number): boolean;
   isInside(start: Annotation | number, end?: number): boolean {
