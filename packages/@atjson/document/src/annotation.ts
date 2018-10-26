@@ -46,16 +46,42 @@ export default abstract class Annotation {
     this.attributes = attrs.attributes;
   }
 
+  isInside(annotation: Annotation): boolean;
+  isInside(start: number, end: number): boolean;
+  isInside(start: Annotation | number, end?: number): boolean {
+    if (start instanceof Annotation) {
+      return start.id !== this.id &&
+             this.isInside(start.start, start.end);
+    } else if (end != null) {
+      return this.start <= start &&
+             this.end <= end;
+    }
+    return false;
+  }
+
+  isOverlapping(annotation: Annotation): boolean;
+  isOverlapping(start: number, end: number): boolean;
+  isOverlapping(start: Annotation | number, end?: number): boolean {
+    if (start instanceof Annotation) {
+      return start.id !== this.id &&
+             this.isOverlapping(start.start, start.end);
+    } else if (end != null) {
+      return (this.start <= start && this.end >= start) ||
+             (this.start <= end   && this.end >= end);
+    }
+    return false;
+  }
+
   /**
    * nb. Currently, changes are applied directly to the document.
    *     In the future, we want to return a set of changes that
    *     are applied to the document including annotations.
    */
-  handleChange(change: Change) {
+  handleChange(change: Change): Annotation[] | void {
     if (change.type === 'insertion') {
-      this.handleInsertion(change as Insertion);
+      return this.handleInsertion(change as Insertion);
     } else {
-      this.handleDeletion(change as Deletion);
+      return this.handleDeletion(change as Deletion);
     }
   }
 
