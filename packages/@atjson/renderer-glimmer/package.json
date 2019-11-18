@@ -1,0 +1,22 @@
+{
+  "name": "@atjson/renderer-glimmer",
+  "version": "0.21.8",
+  "description": "Render atjson documents into Glimmer and Ember components",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/modules/index.js",
+  "types": "dist/commonjs/index.d.ts",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@atjson/renderer-hir": "file:../renderer-hir"
+  },
+  "peerDependencies": {
+    "@glimmer/compiler": "*"
+  },
+  "devDependencies": {
+    "@atjson/document": "file:../document",
+    "@atjson/offset-annotations": "file:../offset-annotations"
+  }
+}

@@ -3,6 +3,7 @@
   "name": "atjson",
   "devDependencies": {
     "@atjson/conventional-changelog-emoji": "0.19.0",
+    "@glimmer/compiler": "^0.44.0",
     "@types/entities": "1.1.1",
     "@types/jest": "24.0.23",
     "@types/markdown-it": "0.0.9",
@@ -47,6 +48,7 @@
     "@atjson/hir": "file:packages/@atjson/hir",
     "@atjson/offset-annotations": "file:packages/@atjson/offset-annotations",
     "@atjson/renderer-commonmark": "file:packages/@atjson/renderer-commonmark",
+    "@atjson/renderer-glimmer": "file:packages/@atjson/renderer-glimmer",
     "@atjson/renderer-graphviz": "file:packages/@atjson/renderer-graphviz",
     "@atjson/renderer-hir": "file:packages/@atjson/renderer-hir",
     "@atjson/renderer-html": "file:packages/@atjson/renderer-html",
