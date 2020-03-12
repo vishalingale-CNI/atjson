@@ -81,10 +81,10 @@
     "publish": "lerna publish",
     "test": "./node_modules/jest/bin/jest.js",
     "typecheck": "tsc -b packages/**/* --force",
-    "anonymize-fixtures": "npx ts-node ./performance/anonymize-fixtures.ts",
-    "perf": "npx ts-node ./performance/index.ts",
-    "perf:baseline": "npx ts-node ./performance/index.ts --baseline baseline",
-    "perf-tstat": "npx ts-node ./performance/tstat.ts"
+    "anonymize-fixtures": "npx ts-node ./perf-kit/anonymize-fixtures.ts",
+    "perf": "npx ts-node ./perf-kit/index.ts",
+    "perf:baseline": "npx ts-node ./perf-kit/index.ts --baseline baseline",
+    "perf-tstat": "npx ts-node ./perf-kit/tstat.ts"
   },
   "workspaces": [
     "packages/@atjson/*"
