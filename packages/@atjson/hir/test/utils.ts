@@ -20,7 +20,9 @@ function node(type: string) {
 
 let bold = node("bold");
 let blockquote = node("blockquote");
-let document = node("root");
+let document = (...children: node[]) => {
+  return children;
+};
 let image = (attributes = {}) => {
   return {
     type: "image",

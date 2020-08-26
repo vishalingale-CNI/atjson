@@ -1,4 +1,4 @@
-import { HIR } from "../src/index";
+import HIR from "../src";
 import TestSource from "./test-source";
 import { bold, document, image, italic, li, ol, paragraph } from "./utils";
 

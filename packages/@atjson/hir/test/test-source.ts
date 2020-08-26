@@ -51,5 +51,13 @@ export class Paragraph extends BlockAnnotation {
 
 export default class TestSource extends Document {
   static contentType = "application/vnd.atjson+test";
-  static schema = [Bold, Image, Italic, ListItem, OrderedList, Paragraph];
+  static schema = [
+    Bold,
+    Blockquote,
+    Image,
+    Italic,
+    ListItem,
+    OrderedList,
+    Paragraph,
+  ];
 }
